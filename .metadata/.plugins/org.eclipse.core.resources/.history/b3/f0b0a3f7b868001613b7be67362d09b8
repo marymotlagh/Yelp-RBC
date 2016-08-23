@@ -1,0 +1,284 @@
+package com.RBC.foodnearyou;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
+
+import com.RBC.foodnearyou.restClient.RequestMethod;
+
+public class SearchActivity extends Activity {
+	public int ResturantPosition;
+	public ArrayList<NameValuePair> headersKey = new ArrayList<NameValuePair>();
+	GridAdapters grvAdapter;
+	Intent intent;
+	//HashMap<Integer, Resturant> resturants;
+	
+	
+   //public YelpAPI yelpAPI;
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        
+        headersKey.add(new BasicNameValuePair("CONSUMER_KEY", Constants.CONSUMER_KEY));
+        headersKey.add(new BasicNameValuePair("CONSUMER_SECRET", Constants.CONSUMER_SECRET));
+        headersKey.add(new BasicNameValuePair("TOKEN", Constants.TOKEN));
+        headersKey.add(new BasicNameValuePair("TOKEN_SECRET", Constants.TOKEN_SECRET));
+	
+       
+        final Button btnFind = (Button) findViewById(R.id.btnFind);
+        final EditText edtSearch = (EditText) findViewById(R.id.edtSearch);
+        btnFind.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//btnFind.setClickable(false);
+				try {
+					FindRest(edtSearch.getText().toString().trim());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.search, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    
+	public void FindRest(String SearchKeyword) throws Exception {
+    	restClient rc = new restClient();
+    	ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
+    	rc.AddParamAuth(param);
+    	param.add(new BasicNameValuePair("term",SearchKeyword));
+    	param.add(new BasicNameValuePair("location",""));
+    	param.add(new BasicNameValuePair("limit","10"));
+ 
+    	Yelp yelp = new Yelp(Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET, Constants.TOKEN, Constants.TOKEN_SECRET);
+        String response = yelp.search(SearchKeyword);
+    	
+    	//String response = rc.Execute(RequestMethod.GET, "https://api.yelp.com/v2/search", null, param) ;
+    	if (response != null) {
+    		
+    	}
+    	else {
+    		
+    	}
+    	/**
+    	 * parse jSON Response
+    	 */
+    	Resturant[] restData = new Resturant[10];
+    	sampleResponse resp = new sampleResponse();
+    	JSONObject  jsonRootObject = new JSONObject(resp.response);
+		   
+	    JSONArray jsonArray = jsonRootObject.optJSONArray("businesses");
+	   
+	    for(int i=0; i < jsonArray.length(); i++){
+		      JSONObject jsonObject = jsonArray.getJSONObject(i);
+		      
+		      String image_url = jsonObject.optString("image_url").toString();
+		      String name = jsonObject.optString("name").toString();
+		      String snippet_text = jsonObject.optString("snippet_text").toString();
+		      
+		      String location = jsonObject.optString("location");
+		      JSONObject jsonRootLocation = new JSONObject(location);
+		      //String display_address = jsonRootLocation.optString("display_address");
+		      
+		      JSONArray display_address_ar = jsonRootLocation.optJSONArray("display_address");
+		      String address ="";
+		      for(int j=0; j < display_address_ar.length(); j++){
+		    	  if (address != "") 
+		    		  address = address + ", ";
+		    	  address = address + display_address_ar.getString(j);
+		      }
+		      restData[i] = new Resturant();
+		      restData[i].setName(name);
+		      restData[i].setAddress(address);
+		      restData[i].setReviews(snippet_text);
+		      restData[i].setImageUrl(image_url);
+	    }
+    	/*******************************************************/
+    	
+    	
+    	restData[1] = new Resturant();
+    	restData[1].setName("1234");
+    	restData[1].setAddress("1234, Toronto, ON");
+    	restData[1].setReviews("high quality food and a greate place for family");
+    	restData[1].setImageUrl("http://www.groupofgl.com/assets/images/products/webtv.png");
+    	
+    	restData[2] = new Resturant();
+    	restData[2].setName("a5678");
+    	restData[2].setAddress("5678, Toronto, ON");
+    	restData[2].setReviews("high quality food and a greate place for family");
+    	restData[2].setImageUrl("http://www.groupofgl.com/assets/images/products/solutions.png");
+    	
+    	restData[3] = new Resturant();
+    	restData[3].setName("9898");
+    	restData[3].setAddress("9898, Toronto, ON");
+    	restData[3].setReviews("high quality food and a greate place for family");
+    	restData[3].setImageUrl("http://www.groupofgl.com/assets/images/products/telephony.png");
+    	
+    	restData[4] = new Resturant();
+    	restData[4].setName("101010");
+    	restData[4].setAddress("34 24, Toronto, ON");
+    	restData[4].setReviews("high quality food and a greate place for family");
+    	restData[4].setImageUrl("http://www.groupofgl.com/assets/images/products/telephony.png");
+    	
+    	restData[5] = new Resturant();
+    	restData[5].setName("Kelsly");
+    	restData[5].setAddress("34 rainbow dr, Toronto, ON");
+    	restData[5].setReviews("high quality food and a greate place for family");
+    	restData[5].setImageUrl("http://www.groupofgl.com/assets/images/products/telephony.png");
+    	/**************************************************************************************************************/
+    	/**
+    	 * Sort Data by Restaurant Name
+    	 */
+		 Arrays.sort(restData, new Comparator<Resturant>() {
+			 	@Override
+				public int compare(Resturant rest1, Resturant rest2) {
+			 		if (rest1!=null)
+			 			if (rest2!=null)
+			 				return rest1.getName().compareToIgnoreCase(rest2.getName());
+			 			else return 1;
+			 		else return 1;
+				}
+		 });
+    			 
+    	UpdateGrvResturant(restData);
+	}
+	/**
+	 * go to restaurant detail page
+	 * @param restData
+	 */
+	private void UpdateGrvResturant(Resturant[] restData){
+		GridView grvResturant = (GridView) findViewById(R.id.grvResturant);
+		grvAdapter =  new GridAdapters(this, (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),restData);
+		if (grvResturant != null) 
+			grvResturant.setAdapter(grvAdapter);
+		
+		intent = new Intent(this, DetailActivity.class);
+		
+		grvResturant.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View v,int position, long id) {
+				
+				if (grvAdapter.getItem(position)!=null) {
+					String rName = grvAdapter.getItem(position).getName();
+					String rAddress = grvAdapter.getItem(position).getAddres();
+					String rImageUrl = grvAdapter.getItem(position).getImageUrl();
+					String rReviewe = grvAdapter.getItem(position).getReviews();
+					
+					intent.putExtra("name", rName);
+					intent.putExtra("address", rAddress);
+					intent.putExtra("imageUrl", rImageUrl);
+					intent.putExtra("review", rReviewe);
+			        startActivity(intent);
+				}
+			   
+			}
+		});
+	}
+   /* public void FindYelp(String SearchKeyword){
+      	YelpAPI.YelpAPICLI yelpApiCli = new YelpAPI.YelpAPICLI();
+        new JCommander(yelpApiCli);
+        YelpAPI yelpApi = new YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
+        try {
+            YelpAPI.queryAPI(yelpApi, yelpApiCli);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        
+    	new HttpRequestTask().execute();*/
+    	//setUp();
+  /*  }
+    public void setUp() {
+    	
+        YelpAPIFactory yelpAPIFactory = new YelpAPIFactory(
+                Credential.consumerKey(),
+                Credential.consumerSecret(),
+                Credential.token(),
+                Credential.tokenSecret()
+
+        );
+
+        // Make API requests to be executed in main thread so we can verify it easily.
+        yelpAPIFactory = AsyncTestUtils.setToRunInMainThread(yelpAPIFactory);
+        yelpAPI = yelpAPIFactory.createAPI();
+    }
+    public void testSearchByLocationWithOptionalCoordinate() throws IOException {
+        Map<String, String> params = new HashMap<>();
+        params.put("term", "yelp");
+        params.put("cll", "37.7867703362929,-122.399958372115");
+
+        Call<SearchResponse> call = yelpAPI.search("Toronto", params);
+        Response<SearchResponse> response = call.execute();
+        Assert.assertEquals(200, response.code());
+
+        SearchResponse searchResponse = response.body();
+        Assert.assertNotNull(searchResponse);
+    }*/
+
+    /*
+    private class HttpRequestTask extends AsyncTask<Void, Void, Restuatant> {
+        @Override
+        protected Restuatant doInBackground(Void... params) {
+            try {
+                final String url = "https://api.yelp.com/v2/search?term=food";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                Restuatant greeting = restTemplate.getForObject(url, Restuatant.class);
+                return greeting;
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Restuatant resturant) {
+            TextView greetingIdText = (TextView) findViewById(R.id.Name);
+            TextView greetingContentText = (TextView) findViewById(R.id.Address);
+            greetingIdText.setText(resturant.getName());
+            greetingContentText.setText(resturant.getAddres());
+        }
+
+    }
+
+*/
+    
+}

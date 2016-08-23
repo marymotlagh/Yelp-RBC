@@ -1,0 +1,24 @@
+package com.RBC.foodnearyou;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.webkit.WebView;
+import android.widget.TextView;
+
+public class DetailActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_detail);
+		
+		WebView web = (WebView) findViewById(R.id.webImage);
+		TextView name = (TextView) findViewById(R.id.txvName);
+		TextView address = (TextView) findViewById(R.id.txvAddress);
+		TextView review = (TextView) findViewById(R.id.txvReview);
+		name.setText("");
+		address.setText("");
+		review.setText("");
+		web.loadUrl("Your Url");
+	}
+}

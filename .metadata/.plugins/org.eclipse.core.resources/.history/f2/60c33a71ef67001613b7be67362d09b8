@@ -1,0 +1,8 @@
+package com.RBC.foodnearyou;
+
+public class Constants {
+	public static String CONSUMER_KEY="BpuSd2BbhLknz-iButybiQ";
+	public static String CONSUMER_SECRET="KMJVpa29lCP-TaDemMp_7jSfwgA";
+	public static String TOKEN="IcBtynzD6VlelX0MRXYwBnAGvCi5KHRG";
+	public static String TOKEN_SECRET="t4MnRO6gSgWX4jwLWEE4T9-22iM";
+}

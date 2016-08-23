@@ -1,0 +1,87 @@
+package com.RBC.foodnearyou;
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+
+public class Adapters {
+	private Activity _context;
+	public Adapters() {
+		super();
+		_context = SearchActivity.mSearchActivity; 
+	}
+
+	public class resturantArrayAdapter extends BaseAdapter {
+
+	
+	ArrayList<resturantArrayAdapter> _resturantAdapter;
+	private LayoutInflater _inflater;
+	public String _name;
+	public String _address;
+	@Override
+	public int getCount() {
+		return _resturantAdapter.size();
+	}
+
+	/**
+	 * Returns one Element of the ArrayList at the specified position.
+	 */
+	@Override
+	public resturantArrayAdapter getItem(int position) {
+		return _resturantAdapter.get(position);
+	}
+
+	@Override
+	public long getItemId(int i) {
+		return i;
+	}
+
+	public resturantArrayAdapter(ArrayList<resturantArrayAdapter> ResturantAdapter) {
+		super();
+		_context = SearchActivity.mSearchActivity; 
+		this._resturantAdapter = ResturantAdapter;
+		this._inflater = (LayoutInflater) SearchActivity.mSearchActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+	}
+	public resturantArrayAdapter(String name, String address) {
+		super();
+		this._name = name;
+		this._address = address;
+
+	}
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View row = convertView;
+		resturanttHolder holder = null;
+		if (row == null) {
+			LayoutInflater inflater = _inflater;
+			row = inflater.inflate(R.layout.grid_layout, parent, false);
+			holder = new resturanttHolder();
+
+			holder.grid_item_name = (TextView) row.findViewById(R.id.grid_item_name);
+			holder.grid_item_address = (TextView) row.findViewById(R.id.grid_item_address);
+			
+
+			row.setTag(holder);
+		} else {
+			holder = (resturanttHolder) row.getTag();
+		}
+		resturantArrayAdapter ResturantAdapter = _resturantAdapter.get(position);
+		holder.grid_item_name.setText(ResturantAdapter._name);
+		holder.grid_item_address.setText(ResturantAdapter._address);
+
+		return row;
+	}
+	class resturanttHolder {
+		TextView grid_item_name;
+		TextView grid_item_address;
+	}
+}
+
+}

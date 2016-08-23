@@ -1,0 +1,125 @@
+package com.RBC.foodnearyou;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class JsonParser {
+	public Resturant[] jData = new Resturant[10];
+	
+	public Resturant[] JsonParser(String strJson){
+		try {
+		   JSONObject  jsonRootObject = new JSONObject(strJson);
+		   
+		   //Get the instance of JSONArray that contains JSONObjects
+		   JSONArray jsonArray = jsonRootObject.optJSONArray("businesses");
+		   
+		   //Iterate the jsonArray and print the info of JSONObjects
+		   for(int i=0; i < jsonArray.length(); i++){
+		      JSONObject jsonObject = jsonArray.getJSONObject(i);
+		      
+		      String businesses = jsonObject.optString("businesses").toString();
+		      String image_url = jsonObject.optString("image_url").toString();
+		      String location = jsonObject.optString("location").toString();
+		      String display_address = jsonObject.optString("display_address").toString();
+		      String name = jsonObject.optString("name").toString();
+		      String snippet_text = jsonObject.optString("snippet_text").toString();
+		      
+		      jData[0] = new Resturant();
+		      jData[0].setName(name);
+		      jData[0].setAddress(display_address);
+		      jData[0].setReviews(snippet_text);
+		      jData[0].setImageUrl(image_url);
+		   }
+		   //output.setText(data);
+		} catch (JSONException e) {e.printStackTrace();}
+		return jData
+	}
+}
+/*public class JsonParser {
+	public Resturant[] readJsonStream(InputStream in) throws IOException {
+	     JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+	     try {
+	       return readResturantArray(reader);
+	     } finally {
+	       reader.close();
+	     }
+	   }
+
+	   public Resturant[] readResturantArray(JsonReader reader) throws IOException {
+	     Resturant[] resturant = new Resturant[]{};
+	     int i=0;
+	     reader.beginArray();
+	     while (reader.hasNext()) {
+	       resturant[i++] = readMessage(reader);
+	     }
+	     reader.endArray();
+	     return resturant;
+	   }
+	   
+	   public String readAddressArray(JsonReader reader) throws IOException {
+		     String Address = "";
+
+		     reader.beginArray();
+		     while (reader.hasNext()) {
+		    	 Address = Address + readMessage(reader) + ",";
+		     }
+		     reader.endArray();
+		     return Address;
+		   }
+
+	   public Resturant readMessage(JsonReader reader) throws IOException {
+
+	     Resturant rest = new Resturant();
+
+	     reader.beginObject();
+	     while (reader.hasNext()) {
+	       String name = reader.nextName();
+	       if (name.equals("id")) {
+	         rest.setId(reader.nextString());
+	       } else if (name.equals("image_url")) {
+	    	   rest.setImageUrl(reader.nextString());
+	       } else if (name.equals("display_address") && reader.peek() != JsonToken.NULL) {
+	    	   rest.setAddress(readAddressArray(reader));
+	       } else if (name.equals("name")) {
+	    	   rest.setName(reader.nextString());
+	       } else if (name.equals("snippet_text")) {
+	    	   rest.setReviews(reader.nextString());
+	       } else {
+	         reader.skipValue();
+	       }
+	     }
+	     reader.endObject();
+	     return rest;
+	   }
+
+	   public List<Double> readDoublesArray(JsonReader reader) throws IOException {
+	     List<Double> doubles = new ArrayList<Double>();
+
+	     reader.beginArray();
+	     while (reader.hasNext()) {
+	       doubles.add(reader.nextDouble());
+	     }
+	     reader.endArray();
+	     return doubles;
+	   }
+
+	   public User readUser(JsonReader reader) throws IOException {
+	     String username = null;
+	     int followersCount = -1;
+
+	     reader.beginObject();
+	     while (reader.hasNext()) {
+	       String name = reader.nextName();
+	       if (name.equals("name")) {
+	         username = reader.nextString();
+	       } else if (name.equals("followers_count")) {
+	         followersCount = reader.nextInt();
+	       } else {
+	         reader.skipValue();
+	       }
+	     }
+	     reader.endObject();
+	     return new User(username, followersCount);
+	   }
+}*/

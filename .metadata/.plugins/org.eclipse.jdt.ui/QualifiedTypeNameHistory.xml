@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="com.RBC.foodnearyou.R.id"/>
+<fullyQualifiedTypeName name="android.R.string"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.exception.InternalError"/>
+<fullyQualifiedTypeName name="java.lang.InternalError"/>
+<fullyQualifiedTypeName name="okhttp3.Call"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.SearchResponse.Builder"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.utils.AsyncTestUtils"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.Credential"/>
+<fullyQualifiedTypeName name="com.yelp.src.integrationTest.java.com.yelp.clientlib.Credential"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.connection.YelpAPI"/>
+<fullyQualifiedTypeName name="android.telecom.Call"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.connection.YelpAPIFactory"/>
+<fullyQualifiedTypeName name="android.content.pm.LauncherApps.Callback"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.Category"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.Business"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.DealOption"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.Deal"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.GiftCertificateOption"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.GiftCertificate"/>
+<fullyQualifiedTypeName name="android.location.Location"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.Location"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.Region"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.Coordinate"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.Review"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.SearchResponse"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.Span"/>
+<fullyQualifiedTypeName name="com.yelp.clientlib.entities.User"/>
+<fullyQualifiedTypeName name="com.RBC.foodnearyou.restClient.RequestMethod"/>
+<fullyQualifiedTypeName name="com.squareup.okhttp.Headers"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="android.R"/>
+<fullyQualifiedTypeName name="com.RBC.foodnearyou.Resturant"/>
+<fullyQualifiedTypeName name="com.RBC.foodnearyou.Adapters.resturantAdapter"/>
+<fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
+<fullyQualifiedTypeName name="com.RBC.foodnearyou.SearchActivity"/>
+</qualifiedTypeNameHistroy>

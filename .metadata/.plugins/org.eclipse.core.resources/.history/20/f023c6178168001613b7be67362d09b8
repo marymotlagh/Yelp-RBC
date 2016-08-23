@@ -1,0 +1,132 @@
+/*package com.RBC.foodnearyou;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.support.v4.widget.CursorAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+
+public class DetailArrayAdapter extends CursorAdapter {
+	
+	private static LayoutInflater sLayoutInflater = null;
+	private List<Resturant> mRest = new ArrayList<Resturant>();
+	private Context mContext;
+	
+	//private Map<String,Bitmap> mBitmaps = new HashMap<String,Bitmap>();
+	
+	static class ViewHolder {
+		ImageView image;
+		TextView name;
+		TextView address;
+		TextView review;
+	}
+	
+	public DetailArrayAdapter(Context context) {
+		super(context,null,0);
+		mContext = context;
+		sLayoutInflater = LayoutInflater.from(mContext);
+
+		initStoragePath(mContext);
+	}
+	
+	@Override
+	public Object getItem(int position) {
+		return mRest.get(position);
+	}
+	
+	@Override
+	public Cursor swapCursor(Cursor newCursor) {
+		Cursor oldCursor = super.swapCursor(newCursor);
+		mRest.clear();
+		if (newCursor !=null) {
+			newCursor.moveToFirst();
+			while(!newCursor.isAfterLast()) {
+				Resturant rest = Resturant.fromCursor(newCursor);
+				mRest.add(rest);
+				newCursor.moveToNext();
+			}
+		}
+		
+		return oldCursor;
+	}
+	
+	public void addSelfie(Resturant rest) {
+	
+		mRest.add(rest);
+		
+		ContentValues values = new ContentValues();
+		
+		values.put("_name", rest.getName());
+		values.put("_address", rest.getAddres());
+		values.put("_review", rest.getReviews());
+		values.put("_imageUrl", rest.getImageUrl());
+		mContext.getContentResolver().insert( Uri.withAppendedPath(Uri.parse("content://com.RBC.foodnearyou/"),"resturant"),values);
+	
+	}
+
+	@Override
+	public void bindView(View view, Context context, Cursor cursor) {
+		ViewHolder holder = (ViewHolder)view.getTag();
+		Bitmap bitmap = null;
+		String path = cursor.getString(cursor.getColumnIndex(Constants.SELFIE_THUMB));
+		if (mBitmaps.containsKey(path)) {
+			bitmap = mBitmaps.get(path);
+		} else {
+			bitmap = BitmapFactory.decodeFile(path);
+			mBitmaps.put(path, bitmap);
+		}
+		holder.image.setImageBitmap(bitmap);
+		holder.name.setText(
+				cursor.getString(cursor.getColumnIndex(Constants.SELFIE_NAME)));
+	}
+
+	@Override
+	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+		View newView;
+		ViewHolder holder = new ViewHolder();
+
+		newView = sLayoutInflater.inflate(R.layout.activity_detail, parent,
+				false);
+		holder.image = (WebView) newView.findViewById(R.id.webImage);
+		holder.name = (TextView) newView.findViewById(R.id.txvName);
+		holder.address = (TextView) newView.findViewById(R.id.txvAddress);
+		holder.review = (TextView) newView.findViewById(R.id.txvReview);
+		
+		newView.setTag(holder);
+
+		return newView;
+	}
+	public static void initStoragePath(Context context) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			try {
+				String root = context.getExternalFilesDir(null)
+						.getCanonicalPath();
+				if (null != root) {
+					File bitmapStorageDir = new File(root, Constants.APP_DIR);
+					bitmapStorageDir.mkdirs();
+					Constants.mBitmapStoragePath = bitmapStorageDir.getCanonicalPath();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}	
+	
+	
+
+}*/

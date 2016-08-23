@@ -1,0 +1,14 @@
+# Add your credential to run the tests in test/java/com/yelp/clientlib/integration.
+
+# Reminder: DO NOT commit your credential into public repositories.
+
+# TODO: Move this class to other directory so src/java/test only contains unit-tests related files.
+
+
+consumer_key: BpuSd2BbhLknz-iButybiQ
+
+consumer_secret: KMJVpa29lCP-TaDemMp_7jSfwgA
+
+token: x8-z9YJD3lUgQPsVLPYMMYWq0Cv4fDxZ
+
+token_secret: kgCqHSkH311QvvW9MAIETGhju3I

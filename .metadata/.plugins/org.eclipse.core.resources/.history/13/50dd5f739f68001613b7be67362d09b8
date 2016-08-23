@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Find Restaurant</string>
+    <string name="search">Restuarant Name</string>
+    <string name="find">Find</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_detail">Restaurant Detail</string>
+    <string name="LReview">Latest Review:</string>
+    <string name="img">Resurant's Image</string>
+   
+
+</resources>

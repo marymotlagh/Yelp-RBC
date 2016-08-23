@@ -1,0 +1,35 @@
+package com.RBC.foodnearyou;
+
+import java.util.List;
+
+public class Resturant {
+	private String _name;
+    private String _address	;
+    private String _imageUrl;
+    private List<?> _reviews;
+
+    public String getName() {
+        return this._name;
+    }
+    public String getAddres() {
+        return this._address;
+    }
+    public String getImageUrl() {
+        return this._imageUrl;
+    }
+    public List<?> getReviews() {
+        return this._reviews;
+    }
+    public void setName(String Name) {
+		this._name = Name;
+	}
+    public void setAddress(String Address) {
+		this._address = Address;
+	}
+    public void setImageUrl(String ImageUrl) {
+		this._imageUrl = ImageUrl;
+	}
+    public void setReviews(List<?> Reviews) {
+		this._reviews = Reviews;
+	}
+}

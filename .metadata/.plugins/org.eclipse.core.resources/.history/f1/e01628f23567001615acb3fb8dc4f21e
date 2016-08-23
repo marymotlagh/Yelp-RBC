@@ -1,0 +1,168 @@
+import java.util.ArrayList;
+
+import android.R;
+import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+
+public class resturantAdapter {
+
+	public String _name;
+	public String _address;
+
+
+	public resturantAdapter() {
+
+	}
+	public resturantAdapter(String name, String address) {
+		super();
+		this._name = name;
+		this._address = address;
+
+	}
+}
+public class resturantArrayAdapter extends BaseAdapter {
+
+	private final Activity _context;
+	ArrayList<resturantAdapter> _resturantAdapter;
+	private LayoutInflater _inflater;
+
+	@Override
+	public int getCount() {
+		return _resturantAdapter.size();
+	}
+
+	/**
+	 * Returns one Element of the ArrayList at the specified position.
+	 */
+	@Override
+	public resturantAdapter getItem(int position) {
+		return _resturantAdapter.get(position);
+	}
+
+	@Override
+	public long getItemId(int i) {
+		return i;
+	}
+
+	public resturantArrayAdapter(ArrayList<resturantAdapter> ResturantAdapter) {
+		super();
+		this._context = Resturant.this; 
+		this._resturantAdapter = ResturantAdapter;
+		this._inflater = (LayoutInflater) MainActivity.mMainactivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View row = convertView;
+		resturanttHolder holder = null;
+		if (row == null) {
+			LayoutInflater inflater = _inflater;
+			row = inflater.inflate(R.layout.deposit_customer_payment_row, parent, false);
+			holder = new resturanttHolder();
+
+			holder.grid_item_name = (TextView) row.findViewById(R.id.g);
+			holder.grid_item_address = (TextView) row.findViewById(R.id.);
+			
+
+			row.setTag(holder);
+		} else {
+			holder = (resturanttHolder) row.getTag();
+		}
+		resturantAdapter ResturantAdapter = _resturantAdapter.get(position);
+		holder.grid_item_name.setText(ResturantAdapter._name);
+		holder.grid_item_address.setText(ResturantAdapter._address);
+
+		return row;
+	}
+	class resturanttHolder {
+		TextView grid_item_name;
+		TextView grid_item_address;
+	}
+}
+
+
+public class DepositCustomerPayment {
+	public String DepCusPayCode;
+	public String DepCusPayName;
+	public String DepCusPayAddress;
+
+	public DepositCustomerPayment() {
+
+	}
+	public DepositCustomerPayment(String depCusPayCode, String depCusPayName, String depCusPayAddress) {
+		super();
+		this.DepCusPayCode = depCusPayCode;
+		this.DepCusPayName = depCusPayName;
+		this.DepCusPayAddress = depCusPayAddress;
+	}
+}
+public class DepositCustomerPaymentArrayAdapter extends BaseAdapter {
+
+	private final Activity _context;
+	ArrayList<DepositCustomerPayment> _DepositCustomerPaymentData;
+	private LayoutInflater _inflater;
+
+	/**
+	 * Returns the Size of the ArrayList
+	 */
+	@Override
+	public int getCount() {
+		return _DepositCustomerPaymentData.size();
+	}
+
+	/**
+	 * Returns one Element of the ArrayList at the specified position.
+	 */
+	@Override
+	public DepositCustomerPayment getItem(int position) {
+		return _DepositCustomerPaymentData.get(position);
+	}
+
+	@Override
+	public long getItemId(int i) {
+		return i;
+	}
+
+	public DepositCustomerPaymentArrayAdapter(ArrayList<DepositCustomerPayment> DepositCustomerPayment) {
+		super();
+		this._context = MainActivity.mMainactivity;
+		this._DepositCustomerPaymentData = DepositCustomerPayment;
+		this._inflater = (LayoutInflater) MainActivity.mMainactivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View row = convertView;
+		DepositCustomerPaymentHolder holder = null;
+		if (row == null) {
+			LayoutInflater inflater = _inflater;
+			row = inflater.inflate(R.layout.deposit_customer_payment_row, parent, false);
+			holder = new DepositCustomerPaymentHolder();
+
+			holder.txvDepCusPayCode = (TextView) row.findViewById(R.id.txvDepCusPayCode);
+			holder.txvDepCusPayName = (TextView) row.findViewById(R.id.txvDepCusPayName);
+			holder.txvDepCusPayAddress = (TextView) row.findViewById(R.id.txvDepCusPayAddress);
+
+			row.setTag(holder);
+		} else {
+			holder = (DepositCustomerPaymentHolder) row.getTag();
+		}
+		DepositCustomerPayment DepositCustomerPayment = _DepositCustomerPaymentData.get(position);
+		holder.txvDepCusPayCode.setText(DepositCustomerPayment.DepCusPayCode);
+		holder.txvDepCusPayName.setText(DepositCustomerPayment.DepCusPayName);
+		holder.txvDepCusPayAddress.setText(DepositCustomerPayment.DepCusPayAddress);
+
+		return row;
+	}
+	class DepositCustomerPaymentHolder {
+		TextView txvDepCusPayCode;
+		TextView txvDepCusPayName;
+		TextView txvDepCusPayAddress;
+	}
+}

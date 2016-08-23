@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FoodNearYou</string>
+    <string name="search">Restuarant Name:</string>
+    <string name="find">Find</string>
+    <string name="fullSearch">Restuarant Name</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

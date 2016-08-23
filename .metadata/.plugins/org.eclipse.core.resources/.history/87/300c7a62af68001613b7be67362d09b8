@@ -1,0 +1,10 @@
+package com.RBC.foodnearyou;
+
+public class Constants {
+	public static String CONSUMER_KEY="BpuSd2BbhLknz-iButybiQ";
+	public static String CONSUMER_SECRET="KMJVpa29lCP-TaDemMp_7jSfwgA";
+	public static String TOKEN="pIaSZvPggXSYi3qtFXQrQNGxG9eDzVii";
+	public static String TOKEN_SECRET="Fv9U6cdva33DAc1LEhBhxf4FZ68";
+	
+	public static final String APP_DIR = "FoodNearYou/resturant";
+}

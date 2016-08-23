@@ -1,0 +1,188 @@
+package com.RBC.foodnearyou;
+
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.RBC.foodnearyou.restClient.RequestMethod;
+
+
+public class SearchActivity extends Activity {
+
+	public ArrayList<NameValuePair> headersKey = new ArrayList<NameValuePair>();
+	/*public static String CONSUMER_KEY="BpuSd2BbhLknz-iButybiQ";
+	public static String CONSUMER_SECRET="KMJVpa29lCP-TaDemMp_7jSfwgA";
+	public static String TOKEN="IcBtynzD6VlelX0MRXYwBnAGvCi5KHRG";
+	public static String TOKEN_SECRET="t4MnRO6gSgWX4jwLWEE4T9-22iM";*/
+   //public YelpAPI yelpAPI;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        
+        headersKey.add(new BasicNameValuePair("CONSUMER_KEY", Constants.CONSUMER_KEY));
+        headersKey.add(new BasicNameValuePair("CONSUMER_SECRET", Constants.CONSUMER_SECRET));
+        headersKey.add(new BasicNameValuePair("TOKEN", Constants.TOKEN));
+        headersKey.add(new BasicNameValuePair("TOKEN_SECRET", Constants.TOKEN_SECRET));
+	
+       
+        final Button btnFind = (Button) findViewById(R.id.btnFind);
+        final EditText edtSearch = (EditText) findViewById(R.id.edtSearch);
+        btnFind.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				btnFind.setClickable(false);
+				try {
+					FindRest(edtSearch.getText().toString().trim());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.search, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public class Restuatant {
+
+        private String Name;
+        private String Address;
+
+        public String getAddres() {
+            return this.Address;
+        }
+        public String getName() {
+            return this.Name;
+        }
+
+    }
+    
+    public void FindRest(String SearchKeyword) throws Exception {
+    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+    	String currentDateandTime = sdf.format(new Date());
+    	
+    	restClient rc = new restClient();
+    	ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
+    	param.add(new BasicNameValuePair("oauth_consumer_key",CONSUMER_KEY));
+    	param.add(new BasicNameValuePair("oauth_token",TOKEN));
+    	param.add(new BasicNameValuePair("oauth_signature_method","HMAC-SHA1"));
+    	param.add(new BasicNameValuePair("oauth_consumer_secret",CONSUMER_SECRET));
+    	param.add(new BasicNameValuePair("oauth_signature",TOKEN_SECRET));
+    	
+    	param.add(new BasicNameValuePair("term","food"));
+    	param.add(new BasicNameValuePair("location","San+Francisco"));
+
+    	
+    	param.add(new BasicNameValuePair("oauth_timestamp",currentDateandTime));
+    	param.add(new BasicNameValuePair("oauth_nonce","qwerty"));
+    	param.add(new BasicNameValuePair("oauth_version","1.0"));
+
+    	rc.Execute(RequestMethod.GET, "https://api.yelp.com/v2/search", headersKey, param) ;
+    }
+    
+   /* public void FindYelp(String SearchKeyword){
+    	
+    	
+    	
+    	YelpAPI.YelpAPICLI yelpApiCli = new YelpAPI.YelpAPICLI();
+        new JCommander(yelpApiCli);
+        YelpAPI yelpApi = new YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
+        try {
+            YelpAPI.queryAPI(yelpApi, yelpApiCli);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        
+    	new HttpRequestTask().execute();*/
+    	
+    	//setUp();
+  /*  }
+    public void setUp() {
+    	
+        YelpAPIFactory yelpAPIFactory = new YelpAPIFactory(
+                Credential.consumerKey(),
+                Credential.consumerSecret(),
+                Credential.token(),
+                Credential.tokenSecret()
+
+        );
+
+        // Make API requests to be executed in main thread so we can verify it easily.
+        yelpAPIFactory = AsyncTestUtils.setToRunInMainThread(yelpAPIFactory);
+        yelpAPI = yelpAPIFactory.createAPI();
+    }
+    public void testSearchByLocationWithOptionalCoordinate() throws IOException {
+        Map<String, String> params = new HashMap<>();
+        params.put("term", "yelp");
+        params.put("cll", "37.7867703362929,-122.399958372115");
+
+        Call<SearchResponse> call = yelpAPI.search("Toronto", params);
+        Response<SearchResponse> response = call.execute();
+        Assert.assertEquals(200, response.code());
+
+        SearchResponse searchResponse = response.body();
+        Assert.assertNotNull(searchResponse);
+    }*/
+
+    /*
+    private class HttpRequestTask extends AsyncTask<Void, Void, Restuatant> {
+        @Override
+        protected Restuatant doInBackground(Void... params) {
+            try {
+                final String url = "https://api.yelp.com/v2/search?term=food";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                Restuatant greeting = restTemplate.getForObject(url, Restuatant.class);
+                return greeting;
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Restuatant resturant) {
+            TextView greetingIdText = (TextView) findViewById(R.id.Name);
+            TextView greetingContentText = (TextView) findViewById(R.id.Address);
+            greetingIdText.setText(resturant.getName());
+            greetingContentText.setText(resturant.getAddres());
+        }
+
+    }
+
+*/
+    
+}
